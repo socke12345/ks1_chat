@@ -3,112 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Chat</title>
+    <title>Quantum Chat Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="bg-animation">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-    </div>
-
-    <div id="announcement-modal" class="modal hidden">
-        <div class="modal-content">
-            <h1 class="glitch" data-text="SYSTEM NACHRICHT">SYSTEM NACHRICHT</h1>
-            <p id="announcement-text"></p>
-            <button onclick="closeModal()">Verstanden</button>
-        </div>
-    </div>
+    <div class="bg-animation"></div>
 
     <div id="login-container">
         <div class="glass-panel login-box">
-            <div class="logo">
-                <i class="fa-solid fa-atom fa-spin"></i>
-                <h2>QUANTUM</h2>
-            </div>
-            
-            <div class="input-group">
-                <i class="fa-solid fa-user"></i>
-                <input type="text" id="username-in" placeholder="Codename wählen..." autocomplete="off">
-            </div>
-            
-            <div class="input-group">
-                <i class="fa-solid fa-key"></i>
-                <input type="password" id="password-in" placeholder="Zugangsschlüssel">
-            </div>
-
-            <label class="checkbox-container">
-                <input type="checkbox" id="admin-check">
-                <span class="checkmark"></span>
-                Admin Login
-            </label>
-
-            <button onclick="attemptLogin()" class="glow-btn">NETZWERK BEITRETEN</button>
+            <h2><i class="fa-solid fa-atom"></i> QUANTUM</h2>
+            <input type="text" id="username-in" placeholder="Benutzername">
+            <input type="password" id="password-in" placeholder="Passwort">
+            <label><input type="checkbox" id="admin-check"> Admin-Login</label>
+            <button onclick="attemptLogin()" class="glow-btn">LOGIN</button>
             <p id="login-error" class="error-text"></p>
         </div>
     </div>
 
     <div id="chat-interface" class="hidden">
-        
         <aside class="glass-panel sidebar">
-            <div class="sidebar-header">
-                <h3><i class="fa-solid fa-users"></i> Online (<span id="count">0</span>)</h3>
-            </div>
+            <h3>Online</h3>
             <ul id="user-list">
-                </ul>
-            
-            <div id="admin-panel" class="hidden">
-                <div class="admin-header">COMMAND CENTER</div>
-                <div class="admin-grid">
-                    <button onclick="adminAction('clearChat')" title="Chat leeren"><i class="fa-solid fa-trash"></i></button>
-                    <button onclick="adminAction('toggleMute')" title="Global Mute" id="mute-btn"><i class="fa-solid fa-microphone-slash"></i></button>
-                    <button onclick="sendAnnouncement()" title="Ansage machen"><i class="fa-solid fa-bullhorn"></i></button>
-                    <button onclick="changeGlobalPass()" title="Passwort ändern"><i class="fa-solid fa-key"></i></button>
-                </div>
-            </div>
+                <li onclick="switchToGlobal()" class="user-item active">Globaler Chat</li>
+            </ul>
         </aside>
 
         <main class="glass-panel chat-area">
             <header>
-                <div class="chat-info">
-                    <h2>PUBLIC CHANNEL</h2>
-                    <span id="typing-indicator"></span>
-                </div>
-                <button class="logout-btn" onclick="location.reload()"><i class="fa-solid fa-power-off"></i></button>
+                <h2 id="current-chat-title">GLOBALER CHANNEL</h2>
+                <button onclick="location.reload()" class="logout-btn"><i class="fa-solid fa-power-off"></i></button>
             </header>
-            
-            <div id="messages-container">
-                </div>
-
+            <div id="messages-container"></div>
             <div class="input-area">
-                <div class="tools">
-                    <label for="img-upload" class="tool-btn"><i class="fa-solid fa-image"></i></label>
-                    <input type="file" id="img-upload" accept="image/*" hidden>
-                    
-                    <button class="tool-btn" onclick="toggleEmoji()"><i class="fa-regular fa-face-smile"></i></button>
+                <div id="emoji-picker" class="hidden glass-panel">
+                    <span onclick="addEmoji('😀')">😀</span><span onclick="addEmoji('🔥')">🔥</span>
+                    <span onclick="addEmoji('🚀')">🚀</span><span onclick="addEmoji('❤️')">❤️</span>
+                    <span onclick="addEmoji('😂')">😂</span><span onclick="addEmoji('😎')">😎</span>
                 </div>
-                
-                <input type="text" id="msg-input" placeholder="Nachricht in das System einspeisen...">
+                <button onclick="toggleEmoji()" class="tool-btn"><i class="fa-regular fa-face-smile"></i></button>
+                <input type="text" id="msg-input" placeholder="Nachricht...">
                 <button onclick="sendMessage()" class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
-
-                <div id="emoji-bar" class="hidden">
-                    <span onclick="addEmoji('😀')">😀</span>
-                    <span onclick="addEmoji('😂')">😂</span>
-                    <span onclick="addEmoji('😎')">😎</span>
-                    <span onclick="addEmoji('🚀')">🚀</span>
-                    <span onclick="addEmoji('🤖')">🤖</span>
-                    <span onclick="addEmoji('💀')">💀</span>
-                    <span onclick="addEmoji('❤️')">❤️</span>
-                    <span onclick="addEmoji('👍')">👍</span>
-                </div>
             </div>
         </main>
     </div>
-
     <audio id="sound-pop" src="https://cdn.freesound.org/previews/242/242501_4414128-lq.mp3"></audio>
-
     <script src="/socket.io/socket.io.js"></script>
     <script src="client.js"></script>
 </body>
