@@ -1,7 +1,7 @@
 {
-  "name": "quantum-chat-v2",
-  "version": "2.1.0",
-  "description": "Premium Glassmorphism Chat mit Private Messaging",
+  "name": "quantum-chat",
+  "version": "2.0.0",
+  "description": "High-End Chatroom",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
